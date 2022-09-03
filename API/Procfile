@@ -1,0 +1,1 @@
+web: gunicorn AlphaProtocol.wsgi --log-file -
