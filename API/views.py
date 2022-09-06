@@ -46,15 +46,11 @@ def verOtp(request,code):
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
-def getIntro(request):
-    data=[
-        'https://res.cloudinary.com/docvlyucw/image/upload/v1662390258/Alpha%20Protocol/Intro/Intro.jpg'
-    ]
-    return Response(data)
-
-@api_view(['GET'])
 def getImg(request,story):
     data=[
+        {
+            'img': 'https://res.cloudinary.com/docvlyucw/image/upload/v1662390258/Alpha%20Protocol/Intro/Intro.jpg'
+        },
         {
             'img':f'https://res.cloudinary.com/docvlyucw/image/upload/v1662212887/Alpha%20Protocol/StoryLine_{story}/Level1.png',
             'ans':f'Story{story}Leve1'
