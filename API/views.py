@@ -12,14 +12,13 @@ from AlphaProtocol import config
 @api_view(['GET'])
 def getRoutes(request):
     routes=[
-        'GET/ap/genotp/',
-        'GET/ap/verotp/:otp',
-        'GET/ap/getintro',
+        'POST/ap/genotp/',
+        'POST/ap/verotp/',
         'GET/ap/getimg/:story'
     ]
     return Response(routes)
 
-def regUsr(request):
+def regUser(request):
     return render(request,'API/genotp.html')
 
 @api_view(['POST'])
@@ -44,7 +43,7 @@ def genOtp(request):
     msg.attach(MIMEText(body, 'plain'))
     server.sendmail(your_email, [sender], msg.as_string())
     server.close()
-    return Response(status=status.HTTP_200_OK)
+    return render(request,'API/genotp.html')
 
 @api_view(['POST'])
 def verOtp(request):
