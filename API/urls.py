@@ -3,8 +3,12 @@ from . import views
 
 urlpatterns = [
     path('',views.getRoutes,name="getRoutes"),
-    path('genotp/<str:phone>',views.genOtp,name="genOtp"),
-    path('verotp/<str:code>/',views.verOtp,name="verOtp"),
+    path('regusr',views.regUsr,name="regUser"),
+    path('genotp',views.genOtp,name="genOtp"),
+    path('verotp',views.verOtp,name="verOtp"),
     path('getotp',views.getcode,name="code"),
-    path('getimg/<str:story>/',views.getImg,name="getImg"),
+    path('getimg/<str:story>',views.getImg,name="getImg"),
+    path('test',views.temp, name="testing"),
+    path('verusr',views.verusr, name="verUSer"),
+
 ]
