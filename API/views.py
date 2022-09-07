@@ -25,9 +25,7 @@ def regUsr(request):
 @api_view(['POST'])
 def genOtp(request):
     otp=f"{random.randint(10,99)}{random.choice(string.ascii_letters)}{random.randint(1,3)}"
-    cache.set('otp',otp,120)
-
-    
+    cache.set('otp',otp,300)
     your_email = config.EMAIL
     your_password = config.PASSWORD
     sender=request.POST['mail']
