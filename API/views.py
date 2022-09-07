@@ -48,26 +48,26 @@ def genOtp(request):
     server.close()
     return Response(status=status.HTTP_200_OK)
 
-@api_view(['GET'])
+@api_view(['POST'])
 def verOtp(request):
     otp=cache.get('otp')
-    code=3
+    code=request.data[0]['code']
     if otp==code:
         cache.delete('otp')
         story=otp[-1]
         data=[
-        {
-            'img': f'{config.PREFIX_URL}/Intro/Intro.jpg'
-        },
-        {
-            'img':f'{config.PREFIX_URL}/StoryLine_{story}/Level1.png',
-            'ans':f'Leve1'
-        },
-        {
-            'img':f'{config.PREFIX_URL}/StoryLine_{story}/Level2.png',
-            'ans':f'Story{story}Level2'
-        }
-    ]
+            {
+                'img': f'{config.PREFIX_URL}/Intro/Intro.jpg'
+            },
+            {
+                'img':f'{config.PREFIX_URL}/StoryLine_{story}/Level1.png',
+                'ans':f'Leve1'
+            },
+            {
+                'img':f'{config.PREFIX_URL}/StoryLine_{story}/Level2.png',
+                'ans':f'Story{story}Level2'
+            }
+        ]
         return Response(data)
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
@@ -95,11 +95,3 @@ def getcode(request):
         return HttpResponse(otp)
     else:
         return HttpResponse("Code expired")
-
-def verusr(request):
-    return render(request, 'API/verotp.html')
-
-@api_view(['POST'])
-def temp(request):
-    content=request.data
-    return HttpResponse(content[0]['data'])
