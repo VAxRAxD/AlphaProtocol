@@ -9,6 +9,9 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from AlphaProtocol import config
 
+stories=[1,2,3]
+current=0
+
 @api_view(['GET'])
 def getRoutes(request):
     routes=[
@@ -23,7 +26,12 @@ def regUser(request):
 
 @api_view(['POST'])
 def genOtp(request):
-    otp=f"{random.randint(10,99)}{random.choice(string.ascii_letters)}{random.randint(1,3)}"
+    global stories,current
+    otp=f"{random.randint(10,99)}{random.choice(string.ascii_letters)}{stories[current]}"
+    if current<3:
+        current+=1
+    else:
+        current=0
     cache.set('otp',otp,300)
     your_email = config.EMAIL
     your_password = config.PASSWORD
