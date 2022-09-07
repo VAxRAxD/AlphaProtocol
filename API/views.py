@@ -4,6 +4,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from django.core.cache import cache
+from AlphaProtocol import config
 
 @api_view(['GET'])
 def getRoutes(request):
@@ -49,14 +50,14 @@ def verOtp(request,code):
 def getImg(request,story):
     data=[
         {
-            'img': 'https://res.cloudinary.com/docvlyucw/image/upload/v1662390258/Alpha%20Protocol/Intro/Intro.jpg'
+            'img': f'{config.PREFIX_URL}/Intro/Intro.jpg'
         },
         {
-            'img':f'https://res.cloudinary.com/docvlyucw/image/upload/v1662212887/Alpha%20Protocol/StoryLine_{story}/Level1.png',
+            'img':f'{config.PREFIX_URL}/StoryLine_{story}/Level1.png',
             'ans':f'Story{story}Leve1'
         },
         {
-            'img':f'https://res.cloudinary.com/docvlyucw/image/upload/v1662212890/Alpha%20Protocol/StoryLine_{story}/Level2.png',
+            'img':f'{config.PREFIX_URL}/StoryLine_{story}/Level2.png',
             'ans':f'Story{story}Level2'
         }
     ]
