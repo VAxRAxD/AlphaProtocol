@@ -102,4 +102,4 @@ def verusr(request):
 @api_view(['POST'])
 def temp(request):
     content=request.data
-    return HttpResponse(content)
+    return HttpResponse(content[0]['data'])
