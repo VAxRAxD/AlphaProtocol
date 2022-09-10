@@ -1,4 +1,4 @@
-import random, string, smtplib
+import random, string, smtplib, datetime
 from django.http import HttpResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -8,6 +8,7 @@ from django.shortcuts import render
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from AlphaProtocol import config
+from . models import *
 
 stories=[1,2,3]
 current=0
@@ -15,9 +16,9 @@ current=0
 @api_view(['GET'])
 def getRoutes(request):
     routes=[
+        'GET/ap/regusr',
         'POST/ap/genotp/',
         'POST/ap/verotp/',
-        'GET/ap/getimg/:story'
     ]
     return Response(routes)
 
@@ -51,6 +52,7 @@ def genOtp(request):
     msg.attach(MIMEText(body, 'plain'))
     server.sendmail(your_email, [sender], msg.as_string())
     server.close()
+    LeaderBoard.objects.create(id=otp,email=sender)
     return render(request,'API/genotp.html')
 
 @api_view(['POST'])
@@ -101,9 +103,15 @@ def verOtp(request):
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
-def getcode(request):
-    otp=cache.get('otp')
-    if otp:
-        return HttpResponse(otp)
-    else:
-        return HttpResponse("Code expired")
+
+@api_view(['POST'])
+def addScore(request):
+    otp=request.data[0]['otp']
+    level=request.data[0]['level']
+    minute=request.data[0]['minute']
+    second=request.data[0]['second']
+    grp=LeaderBoard.objects.get(id=otp)
+    grp.level=level
+    grp.time=datetime.time(0,minute,second)
+    grp.save()
+    return Response(status=status.HTTP_200_OK)

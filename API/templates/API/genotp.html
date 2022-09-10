@@ -10,6 +10,7 @@
 </head>
 <body>
     <form method="POST" action="{% url 'genOtp' %}">
+        {% csrf_token %}
         <input type="text" placeholder="Enter your email" name="mail">
         <input type="submit" value="submit"> 
     </form>
