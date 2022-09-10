@@ -66,33 +66,40 @@ def verOtp(request):
             },
             {
                 'img':f'{config.PREFIX_URL}/StoryLine_{story}/Level1.png',
-                'ans':f'Leve1'
+                'ans':f'APGSL1'
             },
             {
                 'img':f'{config.PREFIX_URL}/StoryLine_{story}/Level2.png',
-                'ans':f'Story{story}Level2'
+                'ans':f'VD{story}L2'
+            },
+            {
+                'img':f'{config.PREFIX_URL}/StoryLine_{story}/Level3.png',
+                'ans':f'AK{story}L3'
+            },
+            {
+                'img':f'{config.PREFIX_URL}/StoryLine_{story}/Level4.png',
+                'ans':f'LE{story}L4'
+            },
+            {
+                'img':f'{config.PREFIX_URL}/StoryLine_{story}/Level5.png',
+                'ans':f'AN{story}L5'
+            },
+            {
+                'img':f'{config.PREFIX_URL}/StoryLine_{story}/Level6.png',
+                'ans':f'AC{story}L6'
+            },
+            {
+                'img':f'{config.PREFIX_URL}/StoryLine_{story}/Level7.png',
+                'ans':f'CL{story}L7'
+            },
+            {
+                'img':f'{config.PREFIX_URL}/StoryLine_{story}/Level8.png',
+                'ans':f'RT{story}L8'
             }
         ]
         return Response(data)
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
-
-@api_view(['GET'])
-def getImg(request,story):
-    data=[
-        {
-            'img': f'{config.PREFIX_URL}/Intro/Intro.jpg'
-        },
-        {
-            'img':f'{config.PREFIX_URL}/StoryLine_{story}/Level1.png',
-            'ans':f'Leve1'
-        },
-        {
-            'img':f'{config.PREFIX_URL}/StoryLine_{story}/Level2.png',
-            'ans':f'Story{story}Level2'
-        }
-    ]
-    return Response(data)
 
 def getcode(request):
     otp=cache.get('otp')
