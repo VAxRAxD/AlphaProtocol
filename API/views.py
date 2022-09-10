@@ -1,4 +1,4 @@
-import random, string, smtplib, datetime, pytz
+import random, string, smtplib, datetime
 from django.http import HttpResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -9,8 +9,6 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from AlphaProtocol import config
 from . models import *
-
-IST = pytz.timezone('Asia/Kolkata')
 
 stories=[1,2,3]
 current=0
@@ -114,6 +112,6 @@ def addScore(request):
     second=request.data[0]['second']
     grp=LeaderBoard.objects.get(id=otp)
     grp.level=level
-    grp.time=datetime.time(0,minute,second,IST)
+    grp.time=datetime.time(0,minute,second)
     grp.save()
     return Response(status=status.HTTP_200_OK)
