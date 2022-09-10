@@ -7,6 +7,4 @@ urlpatterns = [
     path('genotp',views.genOtp,name="genOtp"),
     path('verotp',views.verOtp,name="verOtp"),
     path('getotp',views.getcode,name="code"),
-    path('getimg/<str:story>',views.getImg,name="getImg")
-
 ]
