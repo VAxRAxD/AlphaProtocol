@@ -28,6 +28,8 @@ def regUser(request):
 @api_view(['POST'])
 def genOtp(request):
     global stories,current
+    if cache.get('otp'):
+        return Response(status=status.HTTP_208_ALREADY_REPORTED)
     # otp=f"{random.randint(10,99)}{random.choice(string.ascii_letters)}{stories[current]}"
     otp=f"{random.randint(10,99)}{random.choice(string.ascii_letters)}2"
     if current<2:
