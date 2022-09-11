@@ -28,7 +28,8 @@ def regUser(request):
 @api_view(['POST'])
 def genOtp(request):
     global stories,current
-    otp=f"{random.randint(10,99)}{random.choice(string.ascii_letters)}{stories[current]}"
+    # otp=f"{random.randint(10,99)}{random.choice(string.ascii_letters)}{stories[current]}"
+    otp=f"{random.randint(10,99)}{random.choice(string.ascii_letters)}2"
     if current<2:
         current+=1
     else:
