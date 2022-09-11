@@ -55,13 +55,9 @@ def genOtp(request):
     LeaderBoard.objects.create(id=otp,email=sender)
     return render(request,'API/genotp.html')
 
-@api_view(['POST'])
-def verOtp(request):
-    otp=cache.get('otp')
-    code=request.data[0]['code']
-    if otp==code:
-        cache.delete('otp')
-        story=otp[-1]
+@api_view(['GET'])
+def loadData(request):
+    for story in range(1,4):
         data=[
             {
                 'img': f'{config.PREFIX_URL}/Intro/Intro.jpg'
@@ -99,6 +95,17 @@ def verOtp(request):
                 'ans':f'RT{story}L8'
             }
         ]
+        cache.set(f"level{story}",data)
+    return Response(status=status.HTTP_200_OK)
+
+@api_view(['POST'])
+def verOtp(request):
+    otp=cache.get('otp')
+    code=request.data[0]['code']
+    if otp==code:
+        cache.delete('otp')
+        story=otp[-1]
+        data=cache.get(f"level{story}")
         return Response(data)
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
@@ -115,3 +122,8 @@ def addScore(request):
     grp.time=datetime.time(0,minute,second)
     grp.save()
     return Response(status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+def viewCache(request,id):
+    data=cache.get(f'level{id}')
+    return Response(data)
