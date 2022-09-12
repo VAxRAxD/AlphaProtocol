@@ -6,5 +6,6 @@ urlpatterns = [
     path('regusr',views.regUser,name="regUser"),
     path('genotp',views.genOtp,name="genOtp"),
     path('verotp',views.verOtp,name="verOtp"),
-    path('addscr',views.addScore,name="addScr")
+    path('addscr',views.addScore,name="addScr"),
+    path('getotp',views.getOtp, name="getOtp")
 ]

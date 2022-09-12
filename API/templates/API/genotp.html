@@ -5,14 +5,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/genotp.css' %}">
     <title>Alpha Protocol</title>
-    <link rel="icon" type="image/x-icon" href="{% static 'img/secretagent.ico' %}">
 </head>
 <body>
-    <form method="POST" action="{% url 'genOtp' %}">
-        {% csrf_token %}
-        <input type="text" placeholder="Enter your email" name="mail">
-        <input type="submit" value="submit"> 
-    </form>
+    <div class="main">
+        <div class="register">
+            <form id="register" method="POST" action="{% url 'genOtp' %}">
+                {% csrf_token %}
+                <input type="text" name="mail" id="name" placeholder="Enter participant's email !!">
+                <br><br>
+                <input type="submit" value="Submit" name="submit" id="submit">
+            </form>          
+        </div>
+    </div>
 </body>
 </html>

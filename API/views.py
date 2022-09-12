@@ -22,7 +22,10 @@ def getRoutes(request):
     ]
     return Response(routes)
 
+@api_view(['GET'])
 def regUser(request):
+    if cache.get('otp'):
+        return Response(status=status.HTTP_400_BAD_REQUEST)
     return render(request,'API/genotp.html')
 
 @api_view(['POST'])
@@ -31,7 +34,7 @@ def genOtp(request):
     if cache.get('otp'):
         return Response(status=status.HTTP_208_ALREADY_REPORTED)
     # otp=f"{random.randint(10,99)}{random.choice(string.ascii_letters)}{stories[current]}"
-    otp=f"{random.randint(10,99)}{random.choice(string.ascii_letters)}2"
+    otp=f"{random.randint(10,99)}{random.choice(string.ascii_letters)}1"
     if current<2:
         current+=1
     else:
@@ -67,7 +70,7 @@ def verOtp(request):
         story=otp[-1]
         data=[
             {
-                'img': f'{config.PREFIX_URL}/Intro/Intro.jpg'
+                'img': f'{config.PREFIX_URL}/Intro/Intro.png'
             },
             {
                 'img':f'{config.PREFIX_URL}/StoryLine_{story}/Level1.png',
@@ -76,11 +79,33 @@ def verOtp(request):
             {
                 'img':f'{config.PREFIX_URL}/StoryLine_{story}/Level2.png',
                 'ans':f'VD{story}L2'
-            }
+            },
+            {
+                'img':f'{config.PREFIX_URL}/StoryLine_{story}/Level3.png',
+                'ans':f'AK{story}L3'
+            },
+            {
+                'img':f'{config.PREFIX_URL}/StoryLine_{story}/Level4.png',
+                'ans':f'RT{story}L4'
+            },
+            {
+                'img':f'{config.PREFIX_URL}/StoryLine_{story}/Level5.png',
+                'ans':f'AC{story}L5'
+            },
+            {
+                'img':f'{config.PREFIX_URL}/StoryLine_{story}/Level6.png',
+                'ans':f'AP{story}L6'
+            },
+            {
+                'img':f'{config.PREFIX_URL}/StoryLine_{story}/Level7.png',
+                'ans':f'LF{story}L7'
+            },
+            {
+                'img':f'{config.PREFIX_URL}/Exit/Exit.png',
+                'ans':f'APGEL8'
+            },
         ]
         return Response(data)
-    else:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['POST'])
@@ -94,3 +119,12 @@ def addScore(request):
     grp.time=datetime.time(0,minute,second)
     grp.save()
     return Response(status=status.HTTP_200_OK)
+
+@api_view(["GET"])
+def getOtp(request):
+    data=[
+        {
+            "code":cache.get('otp')
+        }
+    ]
+    return Response(data)
