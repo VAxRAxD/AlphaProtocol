@@ -83,8 +83,12 @@ WSGI_APPLICATION = 'AlphaProtocol.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'd472qnjvcam0ar',
+        'USER': 'xqlhwnunmkjjcm',
+        'PASSWORD': '65a82499facca00f052c78e1aa37e0e0fb99ed26c4f1d606d26fb5bad027f34d',
+        'HOST': 'ec2-34-200-205-45.compute-1.amazonaws.com',
+        'PORT': '5432',
     }
 }
 
