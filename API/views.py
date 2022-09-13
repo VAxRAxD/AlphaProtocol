@@ -67,45 +67,9 @@ def verOtp(request):
     code=request.data[0]['code']
     if otp==code:
         cache.delete('otp')
-        story=otp[-1]
-        data=[
-            {
-                'img': f'{config.PREFIX_URL}/Intro/Intro.png'
-            },
-            {
-                'img':f'{config.PREFIX_URL}/StoryLine_{story}/Level1.png',
-                'ans':f'APGSL1'
-            },
-            {
-                'img':f'{config.PREFIX_URL}/StoryLine_{story}/Level2.png',
-                'ans':f'VD{story}L2'
-            },
-            {
-                'img':f'{config.PREFIX_URL}/StoryLine_{story}/Level3.png',
-                'ans':f'AK{story}L3'
-            },
-            {
-                'img':f'{config.PREFIX_URL}/StoryLine_{story}/Level4.png',
-                'ans':f'RT{story}L4'
-            },
-            {
-                'img':f'{config.PREFIX_URL}/StoryLine_{story}/Level5.png',
-                'ans':f'AC{story}L5'
-            },
-            {
-                'img':f'{config.PREFIX_URL}/StoryLine_{story}/Level6.png',
-                'ans':f'AP{story}L6'
-            },
-            {
-                'img':f'{config.PREFIX_URL}/StoryLine_{story}/Level7.png',
-                'ans':f'LF{story}L7'
-            },
-            {
-                'img':f'{config.PREFIX_URL}/Exit/Exit.png',
-                'ans':f'APGEL8'
-            },
-        ]
-        return Response(data)
+        return Response(status=status.HTTP_200_OK)
+    else:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['POST'])
@@ -128,3 +92,10 @@ def getOtp(request):
         }
     ]
     return Response(data)
+
+def leaderBoard(request):
+    data=LeaderBoard.objects.all()
+    context={
+        "data":data
+    }
+    return render(request,'API/leaderboard.html',context)
