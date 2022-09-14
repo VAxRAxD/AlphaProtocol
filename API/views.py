@@ -80,7 +80,7 @@ def addScore(request):
     second=request.data[0]['second']
     grp=LeaderBoard.objects.get(id=otp)
     grp.level=level
-    grp.time=datetime.time(0,minute,second)
+    grp.completion=datetime.time(0,minute,second)
     grp.save()
     return Response(status=status.HTTP_200_OK)
 
