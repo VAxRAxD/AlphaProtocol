@@ -1,15 +1,24 @@
-*{
-    margin: 0;
-    padding: 0;
-}
-  
 body{
-   background: url("../img/bg.png");
-   background-size: 100%;
-   background-position: fixed 0 -120px;
-   background-repeat: no-repeat;
+    background  :url('../img/bg.png') no-repeat padding-box !important;
+    scroll-behavior: none;
+}
+
+caption{
+    font: bold Poppins;
+    color:white;
+    font-size: 25px;
 }
 
 table{
-    overflow-y: scroll;
+    margin-top:5%;
+    font-size: 20px;
+}
+th,td
+{
+
+    border: 2px solid white;
+    color:white;
+    padding:10px;
+    border-collapse: collapse;
+    border-radius: 5px;
 }

@@ -77,11 +77,10 @@ def verOtp(request):
 def addScore(request):
     otp=request.data[0]['otp']
     level=request.data[0]['level']
-    minute=request.data[0]['minute']
-    second=request.data[0]['second']
+    time=request.data[0]['time']
     grp=LeaderBoard.objects.get(id=otp)
     grp.level=level
-    grp.completion=datetime.time(0,minute,second)
+    grp.completion=time
     grp.save()
     return Response(status=status.HTTP_200_OK)
 
@@ -95,7 +94,7 @@ def getOtp(request):
     return Response(data)
 
 def leaderBoard(request):
-    data=LeaderBoard.objects.all()
+    data=LeaderBoard.objects.all().order_by('-level','completion')[:10]
     context={
         "data":data
     }
