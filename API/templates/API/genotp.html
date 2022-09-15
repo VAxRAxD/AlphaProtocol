@@ -13,7 +13,9 @@
         <div class="register">
             <form id="register" method="POST" action="{% url 'genOtp' %}">
                 {% csrf_token %}
-                <input type="text" name="mail" id="name" placeholder="Enter participant's email !!">
+                <input type="text" name="mail" id="email" placeholder="Enter participant's email !!">
+                <br><br>
+                <input type="text" name="username" id="name" placeholder="Enter participant's name !!">
                 <br><br>
                 <input type="submit" value="Submit" name="submit" id="submit">
             </form>          

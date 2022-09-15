@@ -43,6 +43,7 @@ def genOtp(request):
     your_email = config.EMAIL
     your_password = config.PASSWORD
     sender=request.POST['mail']
+    username=request.POST['username']
     # establishing connection with gmail
     server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
     server.ehlo()
@@ -58,7 +59,7 @@ def genOtp(request):
     msg.attach(MIMEText(body, 'plain'))
     server.sendmail(your_email, [sender], msg.as_string())
     server.close()
-    LeaderBoard.objects.create(id=otp,email=sender)
+    LeaderBoard.objects.create(id=otp,name=username,email=sender)
     return render(request,'API/genotp.html')
 
 @api_view(['POST'])
