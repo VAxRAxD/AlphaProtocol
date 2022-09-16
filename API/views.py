@@ -94,7 +94,7 @@ def getOtp(request):
     return Response(data)
 
 def leaderBoard(request):
-    data=LeaderBoard.objects.all().order_by('-level','completion')[:10]
+    data=LeaderBoard.objects.all().exclude(level__isnull=True).order_by('-level','completion')[:10]
     context={
         "data":data
     }
