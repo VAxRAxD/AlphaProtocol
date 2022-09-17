@@ -1,5 +1,4 @@
-import random, string, smtplib, datetime
-from django.http import HttpResponse
+import random, string, smtplib
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
@@ -19,6 +18,10 @@ def getRoutes(request):
         'GET/ap/regusr',
         'POST/ap/genotp/',
         'POST/ap/verotp/',
+        'GET/ap/getotp',
+        'GET/ap/delotp',
+        'POST/ap/addscr',
+        'GET/ap/ldrbrd'
     ]
     return Response(routes)
 
@@ -34,7 +37,6 @@ def genOtp(request):
     if cache.get('otp'):
         return Response(status=status.HTTP_208_ALREADY_REPORTED)
     otp=f"{random.randint(10,99)}{random.choice(string.ascii_letters)}{stories[current]}"
-    # otp=f"{random.randint(10,99)}{random.choice(string.ascii_letters)}1"
     if current<2:
         current+=1
     else:
@@ -99,3 +101,10 @@ def leaderBoard(request):
         "data":data
     }
     return render(request,'API/leaderboard.html',context)
+
+@api_view(['GET'])
+def delOtp(request):
+    if cache.get('otp'):
+        cache.delete('otp')
+        return Response(status=status.HTTP_200_OK)
+    return Response(status=status.HTTP_204_NO_CONTENT)

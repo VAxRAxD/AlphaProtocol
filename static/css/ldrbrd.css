@@ -1,6 +1,8 @@
 body{
-    background  :url('../img/bg.png') no-repeat padding-box !important;
-    scroll-behavior: none;
+    background :url('../img/bg.png');
+    background-size: 100%;
+    background-position: 0 -10px;
+    background-repeat: no-repeat;
 }
 
 caption{
