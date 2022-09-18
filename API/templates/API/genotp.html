@@ -14,10 +14,10 @@
             <form id="register" method="POST" action="{% url 'genOtp' %}">
                 {% csrf_token %}
                 <label>Email</label>
-                <input type="text" name="mail" id="email" placeholder="Enter participant's email !!" onfocus="this.placeholder =''" onblur="this.placeholder='Enter the participant email'">
+                <input type="text" name="mail" id="email" placeholder="Enter participant's email !!" onfocus="this.placeholder =''" onblur="this.placeholder='Enter participant\'s email !!'" required>
                 <br><br>
                 <label>Name</label>
-                <input type="text" name="username" id="name" placeholder="Enter participant's name !!" onfocus="this.placeholder =''" onblur="this.placeholder='Enter the participant name'">
+                <input type="text" name="username" id="name" placeholder="Enter participant's name !!" onfocus="this.placeholder =''" onblur="this.placeholder='Enter participant\'s name !!'" required>
                 <br><br>
                 <input type="submit" value="Submit" name="submit" id="submit">
             </form>          
