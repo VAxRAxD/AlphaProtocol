@@ -28,7 +28,7 @@ def getRoutes(request):
 @api_view(['GET'])
 def regUser(request):
     if cache.get('otp'):
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+        return Response(status=status.HTTP_208_ALREADY_REPORTED)
     return render(request,'API/genotp.html')
 
 @api_view(['POST'])
