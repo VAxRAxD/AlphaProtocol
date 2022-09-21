@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+from .config import *
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -84,9 +85,9 @@ WSGI_APPLICATION = 'AlphaProtocol.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd472qnjvcam0ar',
-        'USER': 'xqlhwnunmkjjcm',
-        'PASSWORD': '65a82499facca00f052c78e1aa37e0e0fb99ed26c4f1d606d26fb5bad027f34d',
+        'NAME': DBNAME,
+        'USER': DBUSER,
+        'PASSWORD': DBPASS,
         'HOST': 'ec2-34-200-205-45.compute-1.amazonaws.com',
         'PORT': '5432',
     }
