@@ -1,0 +1,26 @@
+body{
+    background :url('../img/bg.png');
+    background-size: 100%;
+    background-position: 0 -10px;
+    background-repeat: no-repeat;
+}
+
+caption{
+    font: bold Poppins;
+    color:white;
+    font-size: 25px;
+}
+
+table{
+    margin-top:5%;
+    font-size: 20px;
+}
+th,td
+{
+
+    border: 2px solid white;
+    color:white;
+    padding:10px;
+    border-collapse: collapse;
+    border-radius: 5px;
+}

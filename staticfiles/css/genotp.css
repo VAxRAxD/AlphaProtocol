@@ -1,0 +1,79 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+body{
+ background: url("../img/bg.png");
+ background-size: 100%;
+ background-position: 0 -120px;
+ background-repeat: no-repeat;
+}
+
+.main{
+  width: 400px;
+  height: max-content;
+  margin: 150px auto 0px auto;
+}
+
+.register{
+ text-align: center;
+ background-color: rgba(0,0,0,0.5);
+ width: 100%;
+ font-size: 25px;
+ border-radius: 10px;
+ border: 1px solid rgba(255,255,255,0.3);
+ box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.3);
+ color:#fff;
+}
+ 
+#register{
+ margin: 40px;
+}
+
+#email{
+  width: 300px;
+  border: 3px solid #ddd;
+  border-radius: 10px;
+  outline: 0;
+  padding: 7px;
+  background-color: #fff;
+  box-shadow: inset 1px 1px 5px rgba(0,0,0,0.3);
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+#input:focus::placeholder{
+  color:transparent;
+}
+
+label{
+  font-family:Arial, Helvetica, sans-serif ;
+}
+#name{
+  width: 300px;
+  border: 3px solid #ddd;
+  border-radius: 10px;
+  outline: 0;
+  padding: 7px;
+  background-color: #fff;
+  box-shadow: inset 1px 1px 5px rgba(0,0,0,0.3);
+}
+
+#submit{
+text-align: center;
+width: 120px;
+padding: 11px;
+font-size:16px;
+font-family: Arial, Helvetica, sans-serif;
+font-weight:400;
+border: none;
+border-radius: 12px;
+background-color: #F58216;
+color: #fff;
+cursor: pointer;
+}
+
+#submit:hover{
+  background-color: green;
+  color:black;
+}
