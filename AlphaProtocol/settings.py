@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-lf94*xlzel!x&n!1#**16&a072f^rs(vnh6x=c52!rrp^p9z5s
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['alphaprotocol.herokuapp.com','127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1','vaxraxd.tech']
 CORS_ALLOW_ALL_ORIGINS=True
 
 
@@ -84,12 +84,8 @@ WSGI_APPLICATION = 'AlphaProtocol.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': DBNAME,
-        'USER': DBUSER,
-        'PASSWORD': DBPASS,
-        'HOST': 'ec2-34-200-205-45.compute-1.amazonaws.com',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
