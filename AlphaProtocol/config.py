@@ -1,2 +1,2 @@
 EMAIL="codex@sfit.ac.in"
-PASSWORD=""
+PASSWORD="Sfit_code"

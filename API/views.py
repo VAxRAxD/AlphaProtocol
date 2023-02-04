@@ -11,32 +11,36 @@ from . models import *
 
 stories=[1,2,3]
 current=0
+day=1
 
 @api_view(['GET'])
 def getRoutes(request):
     routes=[
-        'GET/ap/regusr',
+        'POST/ap/regusr/',
         'POST/ap/genotp/',
         'POST/ap/verotp/',
-        'GET/ap/getotp',
-        'GET/ap/delotp',
-        'POST/ap/addscr',
-        'GET/ap/ldrbrd'
+        'POST/ap/getotp/',
+        'POST/ap/delotp/',
+        'POST/ap/addscr/',
+        'GET/ap/ldrbrd/'
     ]
     return Response(routes)
 
-@api_view(['GET'])
+@api_view(['POST'])
 def regUser(request):
-    if cache.get('otp'):
+    mail=request.data[0]['email']
+    if cache.get(mail):
         return Response(status=status.HTTP_208_ALREADY_REPORTED)
     return render(request,'API/genotp.html')
 
 @api_view(['POST'])
 def genOtp(request):
+    mail=request.POST['mail']
+    username=request.POST['username']
     global stories,current
-    if cache.get('otp'):
+    if cache.get(mail):
         return Response(status=status.HTTP_208_ALREADY_REPORTED)
-    otp=f"{random.randint(10,99)}{random.choice(string.ascii_letters)}{stories[current]}"
+    otp=f"{random.randint(10,99)}{random.choice(string.ascii_letters)}D{day}S{stories[current]}"
     if current<2:
         current+=1
     else:
@@ -44,30 +48,25 @@ def genOtp(request):
     cache.set('otp',otp,300)
     your_email = config.EMAIL
     your_password = config.PASSWORD
-    sender=request.POST['mail']
-    username=request.POST['username']
-    # establishing connection with gmail
     server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
     server.ehlo()
     server.login(your_email, your_password)
-    # the message to be emailed
     msg = MIMEMultipart()
     msg['From'] = your_email
-    msg['To'] = sender
+    msg['To'] = mail
     msg['Subject'] = 'OTP for alpha protocol'
-    # string to store the body of the mail
     body = f"{otp}"
-    # attach the body with the msg instance
     msg.attach(MIMEText(body, 'plain'))
-    server.sendmail(your_email, [sender], msg.as_string())
+    server.sendmail(your_email, [mail], msg.as_string())
     server.close()
-    LeaderBoard.objects.create(id=otp,name=username,email=sender)
+    LeaderBoard.objects.create(id=otp,name=username,email=mail)
     return render(request,'API/genotp.html')
 
 @api_view(['POST'])
 def verOtp(request):
-    otp=cache.get('otp')
-    code=request.data[0]['code']
+    code=request.data[0]['otp']
+    mail=request.data[0]['email']
+    otp=cache.get(mail)
     if otp==code:
         cache.delete('otp')
         return Response(status=status.HTTP_200_OK)
@@ -86,11 +85,12 @@ def addScore(request):
     grp.save()
     return Response(status=status.HTTP_200_OK)
 
-@api_view(["GET"])
+@api_view(["POST"])
 def getOtp(request):
+    mail=request.data[0]['email']
     data=[
         {
-            "code":cache.get('otp')
+            "code":cache.get(mail)
         }
     ]
     return Response(data)
@@ -104,7 +104,9 @@ def leaderBoard(request):
 
 @api_view(['GET'])
 def delOtp(request):
+    global current
     if cache.get('otp'):
         cache.delete('otp')
+        current=0
         return Response(status=status.HTTP_200_OK)
     return Response(status=status.HTTP_204_NO_CONTENT)
