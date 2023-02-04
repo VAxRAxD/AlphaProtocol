@@ -29,8 +29,10 @@ def getRoutes(request):
 @api_view(['POST'])
 def regUser(request):
     mail=request.data[0]['email']
-    if cache.get(mail):
+    try :
+        LeaderBoard.objects.get(email=mail)
         return Response(status=status.HTTP_208_ALREADY_REPORTED)
+    except: pass
     return render(request,'API/genotp.html')
 
 @api_view(['POST'])
@@ -45,7 +47,7 @@ def genOtp(request):
         current+=1
     else:
         current=0
-    cache.set('otp',otp,300)
+    cache.set(mail,otp,300)
     your_email = config.EMAIL
     your_password = config.PASSWORD
     server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
@@ -59,7 +61,7 @@ def genOtp(request):
     msg.attach(MIMEText(body, 'plain'))
     server.sendmail(your_email, [mail], msg.as_string())
     server.close()
-    # LeaderBoard.objects.create(id=otp[-1],name=username,email=mail)
+    LeaderBoard.objects.create(story=otp[-1],name=username,email=mail)
     return render(request,'API/genotp.html')
 
 @api_view(['POST'])
@@ -67,8 +69,9 @@ def verOtp(request):
     code=request.data[0]['otp']
     mail=request.data[0]['email']
     otp=cache.get(mail)
+    print(otp)
     if otp==code:
-        cache.delete('otp')
+        cache.delete(mail)
         return Response(status=status.HTTP_200_OK)
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
@@ -76,16 +79,16 @@ def verOtp(request):
 
 @api_view(['POST'])
 def addScore(request):
-    otp=request.data[0]['otp']
+    email=request.data[0]['email']
     level=request.data[0]['level']
     time=request.data[0]['time']
-    grp=LeaderBoard.objects.get(id=otp)
+    grp=LeaderBoard.objects.get(email=email)
     grp.level=level
     grp.completion=time
     grp.save()
     return Response(status=status.HTTP_200_OK)
 
-@api_view(["POST"])
+@api_view(['POST'])
 def getOtp(request):
     mail=request.data[0]['email']
     data=[
@@ -102,11 +105,12 @@ def leaderBoard(request):
     }
     return render(request,'API/leaderboard.html',context)
 
-@api_view(['GET'])
+@api_view(['POST'])
 def delOtp(request):
     global current
-    if cache.get('otp'):
-        cache.delete('otp')
-        current=0
+    mail=request.data[0]['email']
+    if cache.get(mail):
+        cache.delete(mail)
+        current-=1
         return Response(status=status.HTTP_200_OK)
     return Response(status=status.HTTP_204_NO_CONTENT)
