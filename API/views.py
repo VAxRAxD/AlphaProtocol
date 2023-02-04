@@ -59,7 +59,7 @@ def genOtp(request):
     msg.attach(MIMEText(body, 'plain'))
     server.sendmail(your_email, [mail], msg.as_string())
     server.close()
-    LeaderBoard.objects.create(id=otp[-1],name=username,email=mail)
+    # LeaderBoard.objects.create(id=otp[-1],name=username,email=mail)
     return render(request,'API/genotp.html')
 
 @api_view(['POST'])
