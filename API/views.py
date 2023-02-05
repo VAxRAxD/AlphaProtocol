@@ -16,19 +16,18 @@ day=1
 @api_view(['GET'])
 def getRoutes(request):
     routes=[
-        'POST/ap/regusr/',
+        'GET/ap/regusr/',
         'POST/ap/genotp/',
         'POST/ap/verotp/',
-        'POST/ap/getotp/',
-        'POST/ap/delotp/',
+        'GET/ap/getotp/',
+        'GET/ap/delotp/',
         'POST/ap/addscr/',
         'GET/ap/ldrbrd/'
     ]
     return Response(routes)
 
-@api_view(['POST'])
-def regUser(request):
-    mail=request.data[0]['email']
+@api_view(['GET'])
+def regUser(request,mail):
     try :
         LeaderBoard.objects.get(email=mail)
         return Response(status=status.HTTP_208_ALREADY_REPORTED)
@@ -88,9 +87,8 @@ def addScore(request):
     grp.save()
     return Response(status=status.HTTP_200_OK)
 
-@api_view(['POST'])
-def getOtp(request):
-    mail=request.data[0]['email']
+@api_view(['GET'])
+def getOtp(request,mail):
     data=[
         {
             "code":cache.get(mail)
@@ -105,10 +103,9 @@ def leaderBoard(request):
     }
     return render(request,'API/leaderboard.html',context)
 
-@api_view(['POST'])
-def delOtp(request):
+@api_view(['GET'])
+def delOtp(request,mail):
     global current
-    mail=request.data[0]['email']
     if cache.get(mail):
         cache.delete(mail)
         current-=1

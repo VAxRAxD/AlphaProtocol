@@ -1,13 +1,6 @@
-body{
-    background :url('../img/bg.png');
-    background-size: 100%;
-    background-position: 0 -10px;
-    background-repeat: no-repeat;
-}
-
 caption{
     font: bold Poppins;
-    color:white;
+    color:black;
     font-size: 25px;
 }
 
@@ -18,8 +11,8 @@ table{
 th,td
 {
 
-    border: 2px solid white;
-    color:white;
+    border: 2px solid black;
+    color:black;
     padding:10px;
     border-collapse: collapse;
     border-radius: 5px;
