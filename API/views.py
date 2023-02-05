@@ -38,7 +38,7 @@ def regUser(request,mail):
 def genOtp(request):
     mail=request.POST['mail']
     username=request.POST['username']
-    global stories,current
+    global stories,current,day
     if cache.get(mail):
         return Response(status=status.HTTP_208_ALREADY_REPORTED)
     otp=f"{random.randint(10,99)}{random.choice(string.ascii_letters)}D{day}S{stories[current]}"
