@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alpha Protocol</title>
+    <style>
+        #submit{
+            text-align: center;
+            width: 120px;
+            padding: 11px;
+            font-size:16px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight:400;
+            border: none;
+            border-radius: 12px;
+            box-shadow: inset 1px 1px 5px rgba(0,0,0,0.3);
+            color: black;
+            cursor: pointer;
+        }
+        h1{
+            margin-top: 10%;
+            color: #1597BB;
+        }
+    </style>
+</head>
+<body>
+    <center><h1>Email address not found :(</h1></center>
+    <center>
+        <a href='{% url "regUser" %}'>
+            <button id="submit">
+                Back to registration
+            </button>
+        </a>
+    </center>
+</body>
+</html>

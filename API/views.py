@@ -1,4 +1,4 @@
-import random, string, smtplib
+import random, string, smtplib,requests
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
@@ -27,26 +27,27 @@ def getRoutes(request):
     return Response(routes)
 
 @api_view(['GET'])
-def regUser(request,mail):
-    try :
-        LeaderBoard.objects.get(email=mail)
-        return Response(status=status.HTTP_208_ALREADY_REPORTED)
-    except: pass
+def regUser(request):
     return render(request,'API/genotp.html')
 
-@api_view(['POST'])
 def genOtp(request):
-    mail=request.POST['mail']
-    username=request.POST['username']
     global stories,current,day
+    mail=request.POST.get('mail',False)
+    username=request.POST.get('username',False)
+    response = requests.get("https://isitarealemail.com/api/email/validate",params = {'email': mail})
+    status = response.json()['status']
+    if status == "valid":
+        pass
+    else:
+        return render(request,'API/email.html')
     if cache.get(mail):
-        return Response(status=status.HTTP_208_ALREADY_REPORTED)
+        return render(request,'API/check.html')
     otp=f"{random.randint(10,99)}{random.choice(string.ascii_letters)}D{day}S{stories[current]}"
     if current<2:
         current+=1
     else:
         current=0
-    cache.set(mail,otp,300)
+    cache.set(mail,otp,None)
     your_email = config.EMAIL
     your_password = config.PASSWORD
     server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
@@ -61,7 +62,7 @@ def genOtp(request):
     server.sendmail(your_email, [mail], msg.as_string())
     server.close()
     LeaderBoard.objects.create(story=otp[-1],name=username,email=mail)
-    return render(request,'API/genotp.html')
+    return render(request,'API/success.html')
 
 @api_view(['POST'])
 def verOtp(request):

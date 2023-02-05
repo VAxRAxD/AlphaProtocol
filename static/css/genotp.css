@@ -9,13 +9,15 @@
   margin: 150px auto 0px auto;
 }
 
+h6{
+  color: #3C415C;
+}
+
 .register{
  text-align: center;
- /* background-color: rgba(0,0,0,0.5); */
  width: 100%;
  font-size: 25px;
  border-radius: 10px;
- /* box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.3); */
  color:#fff;
 }
  
@@ -65,7 +67,3 @@ color: black;
 cursor: pointer;
 }
 
-#submit:hover{
-  background-color: green;
-  color:black;
-}
