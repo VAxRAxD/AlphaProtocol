@@ -1,4 +1,5 @@
 import random, string, smtplib,requests
+from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
@@ -101,7 +102,7 @@ def elmVerOtp(request):
                 # data.append({"img" : f"https://res.cloudinary.com/docvlyucw/image/upload/v1675617827/Iris%202023/Day%201/Ending/end.png" })
             # combinations.append([{'data':data}])
             combinations.append(data)
-        return Response(combinations[indx-1],safe=False)
+        return JsonResponse(combinations[indx-1],safe=False)
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
