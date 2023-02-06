@@ -99,7 +99,8 @@ def elmVerOtp(request):
                 j+=1
                 count+=1
                 # data.append({"img" : f"https://res.cloudinary.com/docvlyucw/image/upload/v1675617827/Iris%202023/Day%201/Ending/end.png" })
-            combinations.append([{'data':data}])
+            # combinations.append([{'data':data}])
+            combinations.append(data)
         return Response(combinations[indx-1])
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
