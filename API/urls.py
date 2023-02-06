@@ -6,6 +6,7 @@ urlpatterns = [
     path('regusr/',views.regUser,name="regUser"),
     path('genotp/',views.genOtp,name="genOtp"),
     path('verotp',views.verOtp,name="verOtp"),
+    path('elmVerotp',views.elmVerOtp,name="elmVerOtp"),
     path('addscr',views.addScore,name="addScr"),
     path('getotp/<str:mail>',views.getOtp, name="getOtp"),
     path('ldrbrd',views.leaderBoard,name="leaderBoard"),
