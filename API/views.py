@@ -87,15 +87,15 @@ def elmVerOtp(request):
         # cache.delete(mail)
         indx=int(otp[-2::])
         combinations=list()
-        for i in range(len(20)):
+        for i in range(20):
             data=list()
             j=i
             count=0
-            while count<len(20):
-                if j>=len(20):
+            while count<20:
+                if j>=20:
                     j=0
                 # data.append({ "img": f"https://res.cloudinary.com/docvlyucw/image/upload/v1675605007/Iris%202023/Day%203/{20[j]}.png" })
-                data.append(i-1)
+                data.append(j)
                 j+=1
                 count+=1
                 # data.append({"img" : f"https://res.cloudinary.com/docvlyucw/image/upload/v1675617827/Iris%202023/Day%201/Ending/end.png" })
