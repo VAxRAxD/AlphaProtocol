@@ -57,7 +57,7 @@ def genOtp(request):
     msg['From'] = your_email
     msg['To'] = mail
     msg['Subject'] = 'OTP for alpha protocol'
-    body = f"{otp}"
+    body = f"Thank you for registering for treasure hunt . Your one time password to get started is {otp}.We hope you keep it confidential. Vamos!!"
     msg.attach(MIMEText(body, 'plain'))
     server.sendmail(your_email, [mail], msg.as_string())
     server.close()
