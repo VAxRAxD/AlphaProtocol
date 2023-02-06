@@ -10,7 +10,7 @@ from AlphaProtocol import config
 from . models import *
 
 stories=[1,2,3]
-levels=["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20"]
+# 20=["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20"]
 current=0
 day=1
 
@@ -45,7 +45,7 @@ def genOtp(request):
     if cache.get(mail):
         return render(request,'API/check.html')
     # otp=f"{random.randint(10,99)}{random.choice(string.ascii_letters)}D{day}S{stories[current]}"
-    otp="ELRD3P01"
+    otp="ELRD3P03"
     if current<2:
         current+=1
     else:
@@ -87,18 +87,19 @@ def elmVerOtp(request):
         # cache.delete(mail)
         indx=int(otp[-2::])
         combinations=list()
-        for i in range(len(levels)):
+        for i in range(len(20)):
             data=list()
             j=i
             count=0
-            while count<len(levels):
-                if j>=len(levels):
+            while count<len(20):
+                if j>=len(20):
                     j=0
-                data.append({ "img": f"https://res.cloudinary.com/docvlyucw/image/upload/v1675605007/Iris%202023/Day%203/{levels[j]}.png" })
+                # data.append({ "img": f"https://res.cloudinary.com/docvlyucw/image/upload/v1675605007/Iris%202023/Day%203/{20[j]}.png" })
+                data.append(i-1)
                 j+=1
                 count+=1
-                data.append({"img" : f"https://res.cloudinary.com/docvlyucw/image/upload/v1675617827/Iris%202023/Day%201/Ending/end.png" })
-            combinations.append(data)
+                # data.append({"img" : f"https://res.cloudinary.com/docvlyucw/image/upload/v1675617827/Iris%202023/Day%201/Ending/end.png" })
+            combinations.append([{'data':data}])
         return Response(combinations[indx-1])
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
