@@ -45,8 +45,7 @@ def genOtp(request):
         return render(request,'API/email.html')
     if cache.get(mail):
         return render(request,'API/check.html')
-    # otp=f"{random.randint(10,99)}{random.choice(string.ascii_letters)}D{day}S{stories[current]}"
-    otp="81rD2S1"
+    otp=f"{random.randint(10,99)}{random.choice(string.ascii_letters)}D{day}S{stories[current]}"
     '''
     otp="ELRD<day>P<team>"
     '''
