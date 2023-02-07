@@ -5,6 +5,7 @@ class LeaderBoard(models.Model):
     story=models.CharField(max_length=1)
     name=models.CharField(max_length=50, null=True)
     level=models.IntegerField(blank=True,null=True)
+    day=models.CharField(max_length=10,default="1")
     completion=models.FloatField(blank=True,null=True)
 
     def __str__(self) -> str:

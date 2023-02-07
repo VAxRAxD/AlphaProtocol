@@ -12,7 +12,7 @@ from . models import *
 stories=[1,2,3]
 levels=["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20"]
 current=0
-day=1
+day=2
 
 @api_view(['GET'])
 def getRoutes(request):
@@ -24,7 +24,8 @@ def getRoutes(request):
         'GET/ap/getotp/',
         'GET/ap/delotp/',
         'POST/ap/addscr/',
-        'GET/ap/ldrbrd/'
+        'GET/ap/ldrbrd/',
+        'GET/ap/getplrs/'
     ]
     return Response(routes)
 
@@ -44,7 +45,8 @@ def genOtp(request):
         return render(request,'API/email.html')
     if cache.get(mail):
         return render(request,'API/check.html')
-    otp=f"{random.randint(10,99)}{random.choice(string.ascii_letters)}D{day}S{stories[current]}"
+    # otp=f"{random.randint(10,99)}{random.choice(string.ascii_letters)}D{day}S{stories[current]}"
+    otp="81rD2S1"
     '''
     otp="ELRD<day>P<team>"
     '''
@@ -66,7 +68,7 @@ def genOtp(request):
     msg.attach(MIMEText(body, 'plain'))
     server.sendmail(your_email, [mail], msg.as_string())
     server.close()
-    LeaderBoard.objects.create(story=otp[-1],name=username,email=mail)
+    LeaderBoard.objects.create(story=otp[-1],name=username,email=mail,day=2)
     return render(request,'API/success.html')
 
 @api_view(['POST'])
@@ -124,8 +126,8 @@ def getOtp(request,mail):
     ]
     return Response(data)
 
-def leaderBoard(request):
-    data=LeaderBoard.objects.all().exclude(level__isnull=True).order_by('-level','completion')[:10]
+def leaderBoard(request,day):
+    data=LeaderBoard.objects.filter(day=day).exclude(level__isnull=True).order_by('-level','completion')
     context={
         "data":data
     }
@@ -139,3 +141,10 @@ def delOtp(request,mail):
         current-=1
         return Response(status=status.HTTP_200_OK)
     return Response(status=status.HTTP_204_NO_CONTENT)
+
+def getplayers(request,day,story):
+    data=LeaderBoard.objects.filter(story=story,day=day).exclude(level__isnull=True).order_by('-level','completion')
+    context={
+        "data":data
+    }
+    return render(request,'API/leaderboard.html',context)
