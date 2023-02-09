@@ -12,5 +12,6 @@ urlpatterns = [
     path('ldrbrd/<str:day>',views.leaderBoard, name="ldrbrd"),
     path('delotp/<str:mail>',views.delOtp,name="delOtp"),
     path('regseat/',views.regSeat,name="regst"),
-    path('getseat',views.getSeat,name="getst")
+    path('getseat',views.getSeat,name="getst"),
+    path('rstseat',views.regSeat,name='regseat')
 ]
