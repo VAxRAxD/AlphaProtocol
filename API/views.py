@@ -95,7 +95,7 @@ def elmVerOtp(request):
             while count<len(levels):
                 if j>=len(levels):
                     j=0
-                data.append({ "img": f"https://res.cloudinary.com/docvlyucw/image/uploadIris%202023/Day%203/{levels[j]}.jpg" })
+                data.append({ "img": f"https://res.cloudinary.com/docvlyucw/image/upload/Iris%202023/Day%203/{levels[j]}.jpg" })
                 j+=1
                 count+=1
             combinations.append(data)
