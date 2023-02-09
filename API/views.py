@@ -9,10 +9,8 @@ from email.mime.text import MIMEText
 from AlphaProtocol import config
 from . models import *
 
-stories=[1,2,3]
 levels=["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20"]
-current=0
-day=2
+day=3
 
 @api_view(['GET'])
 def getRoutes(request):
@@ -21,11 +19,14 @@ def getRoutes(request):
         'POST/ap/genotp/',
         'POST/ap/verotp/',
         'POST/ap/elmVerotp/',
-        'GET/ap/getotp/',
-        'GET/ap/delotp/',
+        'GET/ap/getotp/<email>/',
+        'GET/ap/delotp/<email>/',
         'POST/ap/addscr/',
-        'GET/ap/ldrbrd/',
-        'GET/ap/getplrs/'
+        'GET/ap/ldrbrd/<story>/',
+        'GET/ap/getplrs/<day>/<story>/',
+        'GET/ap/iniotp/',
+        'GET/ap/regseat/',
+        "GET/ap/getseat/"
     ]
     return Response(routes)
 
@@ -34,7 +35,7 @@ def regUser(request):
     return render(request,'API/genotp.html')
 
 def genOtp(request):
-    global stories,current,day
+    global day
     mail=request.POST.get('mail',False)
     username=request.POST.get('username',False)
     response = requests.get("https://isitarealemail.com/api/email/validate",params = {'email': mail})
@@ -45,14 +46,8 @@ def genOtp(request):
         return render(request,'API/email.html')
     if cache.get(mail):
         return render(request,'API/check.html')
-    otp=f"{random.randint(10,99)}{random.choice(string.ascii_letters)}D{day}S{stories[current]}"
-    '''
-    otp="ELRD<day>P<team>"
-    '''
-    if current<2:
-        current+=1
-    else:
-        current=0
+    otp=f"{random.randint(10,99)}{random.choice(string.ascii_letters)}D{day}{levels[cache.get('grps')-1]}"
+    cache.set('grps',cache.get('grps')+1)
     cache.set(mail,otp,None)
     your_email = config.EMAIL
     your_password = config.PASSWORD
@@ -134,10 +129,8 @@ def leaderBoard(request,day):
 
 @api_view(['GET'])
 def delOtp(request,mail):
-    global current
     if cache.get(mail):
         cache.delete(mail)
-        current-=1
         return Response(status=status.HTTP_200_OK)
     return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -147,3 +140,29 @@ def getplayers(request,day,story):
         "data":data
     }
     return render(request,'API/leaderboard.html',context)
+
+@api_view(['GET'])
+def initOtp(request):
+    if cache.get('grps'):
+        cache.delete('grps')
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+    else:
+        cache.set('grps',1,None)
+        return Response(status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+def regSeat(request):
+    if cache.get('seat'):
+        cache.set('seat',cache.get('seat')+1,None)
+    else:
+        cache.set('seat',1,None)
+    return Response(status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+def getSeat(request):
+    data=[
+        {
+            "seat":cache.get('seat')
+        }
+    ]
+    return Response(data)
