@@ -5,12 +5,14 @@ from rest_framework import status
 from django.core.cache import cache
 from django.shortcuts import render
 from email.mime.multipart import MIMEMultipart
+from django.views.decorators.csrf import csrf_exempt
 from email.mime.text import MIMEText
 from AlphaProtocol import config
 from . models import *
 
 levels=["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20"]
 day=3
+grps=0
 
 @api_view(['GET'])
 def getRoutes(request):
@@ -35,7 +37,7 @@ def regUser(request):
     return render(request,'API/genotp.html')
 
 def genOtp(request):
-    global day
+    global day,grps
     mail=request.POST.get('mail',False)
     username=request.POST.get('username',False)
     response = requests.get("https://isitarealemail.com/api/email/validate",params = {'email': mail})
@@ -46,8 +48,8 @@ def genOtp(request):
         return render(request,'API/email.html')
     if cache.get(mail):
         return render(request,'API/check.html')
-    otp=f"{random.randint(10,99)}{random.choice(string.ascii_letters)}D{day}{levels[cache.get('grps')-1]}"
-    cache.set('grps',cache.get('grps')+1)
+    otp=f"{random.randint(10,99)}{random.choice(string.ascii_letters)}D{day}{levels[grps]}"
+    grps+=1
     cache.set(mail,otp,None)
     your_email = config.EMAIL
     your_password = config.PASSWORD
@@ -77,6 +79,7 @@ def verOtp(request):
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
+@csrf_exempt
 def elmVerOtp(request):
     code=request.data[0]['otp']
     mail=request.data[0]['email']
@@ -140,15 +143,6 @@ def getplayers(request,day,story):
         "data":data
     }
     return render(request,'API/leaderboard.html',context)
-
-@api_view(['GET'])
-def initOtp(request):
-    if cache.get('grps'):
-        cache.delete('grps')
-        return Response(status=status.HTTP_400_BAD_REQUEST)
-    else:
-        cache.set('grps',1,None)
-        return Response(status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 def regSeat(request):

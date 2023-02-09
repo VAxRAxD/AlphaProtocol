@@ -11,7 +11,6 @@ urlpatterns = [
     path('getotp/<str:mail>',views.getOtp, name="getOtp"),
     path('iniotp/',views.initOtp, name="initotp"),
     path('ldrbrd/<str:day>',views.leaderBoard, name="ldrbrd"),
-    path('getplrs/<str:day>/<str:story>',views.getplayers,name="getplayers"),
     path('delotp/<str:mail>',views.delOtp,name="delOtp"),
     path('regseat/',views.regSeat,name="regst"),
     path('getseat',views.getSeat,name="getst")
