@@ -95,7 +95,7 @@ def elmVerOtp(request):
             while count<len(levels):
                 if j>=len(levels):
                     j=0
-                data.append({ "img": f"https://res.cloudinary.com/docvlyucw/image/upload/v1675605007/Iris%202023/Day%203/{levels[j]}.jpg" })
+                data.append({ "img": f"https://res.cloudinary.com/docvlyucw/image/uploadIris%202023/Day%203/{levels[j]}.jpg" })
                 j+=1
                 count+=1
             combinations.append(data)
@@ -154,9 +154,16 @@ def regSeat(request):
 
 @api_view(['GET'])
 def getSeat(request):
-    data=[
-        {
-            "seat":cache.get('seat')
-        }
-    ]
+    if cache.get('seat'):
+        data=[
+            {
+                "seat":cache.get('seat')
+            }
+        ]
+    else:
+        data=[
+            {
+                "seat":0
+            }
+        ]
     return Response(data)
