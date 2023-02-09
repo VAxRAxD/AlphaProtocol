@@ -170,5 +170,5 @@ def getSeat(request):
 
 @api_view(['GET'])
 def resetSeat(request):
-    cache.set('seat',0)
+    cache.set('seat',0,None)
     return Response(status=status.HTTP_200_OK)
