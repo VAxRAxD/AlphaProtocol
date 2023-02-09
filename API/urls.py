@@ -9,7 +9,6 @@ urlpatterns = [
     path('elmVerotp',views.elmVerOtp,name="elmVerOtp"),
     path('addscr',views.addScore,name="addScr"),
     path('getotp/<str:mail>',views.getOtp, name="getOtp"),
-    path('iniotp/',views.initOtp, name="initotp"),
     path('ldrbrd/<str:day>',views.leaderBoard, name="ldrbrd"),
     path('delotp/<str:mail>',views.delOtp,name="delOtp"),
     path('regseat/',views.regSeat,name="regst"),

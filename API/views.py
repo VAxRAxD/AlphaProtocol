@@ -85,7 +85,7 @@ def elmVerOtp(request):
     mail=request.data[0]['email']
     otp=cache.get(mail)
     if otp==code:
-        # cache.delete(mail)
+        cache.delete(mail)
         indx=int(otp[-2::])
         combinations=list()
         for i in range(len(levels)):
@@ -95,7 +95,7 @@ def elmVerOtp(request):
             while count<len(levels):
                 if j>=len(levels):
                     j=0
-                data.append({ "img": f"https://res.cloudinary.com/docvlyucw/image/upload/v1675605007/Iris%202023/Day%203/{levels[j]}.png" })
+                data.append({ "img": f"https://res.cloudinary.com/docvlyucw/image/upload/v1675605007/Iris%202023/Day%203/{levels[j]}.jpg" })
                 j+=1
                 count+=1
             combinations.append(data)
