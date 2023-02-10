@@ -48,7 +48,7 @@ def genOtp(request):
         return render(request,'API/email.html')
     if cache.get(mail):
         return render(request,'API/check.html')
-    otp=f"{random.randint(10,99)}{random.choice(string.ascii_letters)}D{day}{levels[grps]}"
+    otp=f"{random.randint(10,99)}{random.choice(string.ascii_letters)}D{day}{levels[grps]%20}"
     grps+=1
     cache.set(mail,otp,None)
     your_email = config.EMAIL
